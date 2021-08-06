@@ -23,7 +23,10 @@ namespace Buck.Samples.AspNet
             services.AddRazorPages();
 
             services.AddSingleton<AnimalRepository>();
+            services.AddSingleton<VehicleRepository>();
+
             services.AddSingleton<AnimalCache>();
+            services.AddSingleton<VehicleCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
