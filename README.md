@@ -1,2 +1,2 @@
 # Buck
-Effortlessly simple strongly typed light ORM for in-memory and durable distributed .NET caching that scales with your workload
+Effortlessly simple opinionated strongly typed read through cache for .NET that scales from one node to one million with zero code changes
