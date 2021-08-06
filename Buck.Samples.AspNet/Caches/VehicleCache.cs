@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Buck.Samples.AspNet.Caches
 {
-    public class VehicleCache : ReadThroughCache<string, Vehicle[]>
+    public class VehicleCache : Cache<string, Vehicle[]>
     {
         private readonly VehicleRepository repository;
 

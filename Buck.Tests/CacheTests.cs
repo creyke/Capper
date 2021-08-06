@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Buck.Tests
 {
-    public class ReadThroughCacheTests
+    public class CacheTests
     {
         [Theory]
         [InlineData(0)]
@@ -58,7 +57,7 @@ namespace Buck.Tests
             var subject = new PingPongCache();
         }
 
-        class PingPongCache : ReadThroughCache<int, string>
+        class PingPongCache : Cache<int, string>
         {
             public PingPongCache(IDistributedCache cache, ICacheMetricService metrics) : base(cache, metrics)
             {
@@ -78,7 +77,7 @@ namespace Buck.Tests
             }
         }
 
-        class FailingFirstTimeCache : ReadThroughCache<int, string>
+        class FailingFirstTimeCache : Cache<int, string>
         {
             private int attempt;
 

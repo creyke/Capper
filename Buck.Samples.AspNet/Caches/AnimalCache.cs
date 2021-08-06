@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Buck.Samples.AspNet.Caches
 {
-    public class AnimalCache : ReadThroughCache<string, Animal[]>
+    public class AnimalCache : Cache<string, Animal[]>
     {
         private readonly AnimalRepository repository;
 

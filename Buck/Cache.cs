@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace Buck
 {
-    public abstract class ReadThroughCache<TKey, TValue>
+    public abstract class Cache<TKey, TValue>
     {
         private readonly IDistributedCache cache;
         private readonly ICacheMetricService metrics;
 
-        public ReadThroughCache(IDistributedCache cache, ICacheMetricService metrics)
+        public Cache(IDistributedCache cache, ICacheMetricService metrics)
         {
             this.cache = cache;
             this.metrics = metrics;
         }
 
-        public ReadThroughCache(IDistributedCache cache) : this(cache, new DormantCacheMetricService())
+        public Cache(IDistributedCache cache) : this(cache, new DormantCacheMetricService())
         {
         }
 
-        public ReadThroughCache() : this(new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions())))
+        public Cache() : this(new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions())))
         {
         }
 
