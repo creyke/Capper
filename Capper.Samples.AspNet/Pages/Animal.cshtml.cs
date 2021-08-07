@@ -14,8 +14,7 @@ namespace Capper.Samples.AspNet.Pages
         private readonly AnimalRepository _repository;
         private readonly IDistributedCache _cache;
         
-        public CacheResponse<IEnumerable<Animal>> CacheResponse { get; private set; }
-        public string Variant { get; private set; }
+        public CacheResponse<string, IEnumerable<Animal>> CacheResponse { get; private set; }
 
         public AnimalModel(ILogger<AnimalModel> logger, AnimalRepository repository, IDistributedCache cache)
         {
@@ -28,7 +27,6 @@ namespace Capper.Samples.AspNet.Pages
         {
             CacheResponse = await _cache.ReadThroughWithResponseAsync(id, async () =>
                 await _repository.GetAsync(id));
-            Variant = id;
         }
     }
 }

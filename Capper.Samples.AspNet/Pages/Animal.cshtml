@@ -1,11 +1,11 @@
 ﻿@page
 @model AnimalModel
 @{
-    ViewData["Title"] = "Animals (" + Model.Variant +"s)";
+    ViewData["Title"] = "Animals (" + Model.CacheResponse.Key + "s)";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Loading from animal cache or repository where there are @Model.Variant variants...</p>
+<p>Loading from animal cache or repository where there are @Model.CacheResponse.Key variants...</p>
 
 <p><b>Cache Response Type:</b> @Model.CacheResponse.ResponseType</p>
 <p><b>Cache Response Time:</b> @Model.CacheResponse.ResponseTime</p>

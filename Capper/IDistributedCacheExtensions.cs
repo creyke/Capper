@@ -14,7 +14,7 @@ namespace Capper
             return (await ReadThroughWithResponseAsync(cache, key, func)).Value;
         }
 
-        public static async Task<CacheResponse<T>> ReadThroughWithResponseAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func)
+        public static async Task<CacheResponse<TKey, T>> ReadThroughWithResponseAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func)
         {
             var responseType = CacheResponseType.Hit;
 
@@ -39,7 +39,7 @@ namespace Capper
 
             stopwatch.Stop();
 
-            return new CacheResponse<T>(value, responseType, TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds));
+            return new CacheResponse<TKey, T>(key,value, responseType, TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds));
         }
 
         private static T Deserialize<T>(byte[] serialized)
