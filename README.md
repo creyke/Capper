@@ -1,2 +1,2 @@
 # Buck
-Pluggable strongly typed instrumented read through caching for .NET made joy inducingly simple
+A simple and auto-instrumentable ORM for your .NET distributed cache
