@@ -1,7 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>0.0.1-pre</Version>
+    <Description>A simple and auto-instrumentable ORM for your .NET distributed cache</Description>
   </PropertyGroup>
 
   <ItemGroup>
