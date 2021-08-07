@@ -1,4 +1,3 @@
-using Capper.Samples.AspNet.Caches;
 using Capper.Samples.AspNet.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,9 +23,6 @@ namespace Capper.Samples.AspNet
 
             services.AddSingleton<AnimalRepository>();
             services.AddSingleton<VehicleRepository>();
-
-            services.AddSingleton<AnimalCache>();
-            services.AddSingleton<VehicleCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

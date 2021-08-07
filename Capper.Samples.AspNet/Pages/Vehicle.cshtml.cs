@@ -1,7 +1,9 @@
-﻿using Capper.Samples.AspNet.Caches;
-using Capper.Samples.AspNet.Model;
+﻿using Capper.Samples.AspNet.Model;
+using Capper.Samples.AspNet.Repositories;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Capper.Samples.AspNet.Pages
@@ -9,12 +11,13 @@ namespace Capper.Samples.AspNet.Pages
     public class VehicleModel : PageModel
     {
         private readonly ILogger<VehicleModel> _logger;
-        private readonly VehicleCache _cache;
+        private readonly IDistributedCache _cache;
+        private readonly VehicleRepository _repository;
 
-        public CacheResponse<Vehicle[]> CacheResponse { get; private set; }
+        public CacheResponse<IEnumerable<Vehicle>> CacheResponse { get; private set; }
         public string Variant { get; private set; }
 
-        public VehicleModel(ILogger<VehicleModel> logger, VehicleCache cache)
+        public VehicleModel(ILogger<VehicleModel> logger, IDistributedCache cache, VehicleRepository repository)
         {
             _logger = logger;
             _cache = cache;
@@ -22,7 +25,8 @@ namespace Capper.Samples.AspNet.Pages
 
         public async Task OnGet(string id)
         {
-            CacheResponse = await _cache.ReadAsync(id);
+            CacheResponse = await _cache.ReadThroughWithResponseAsync(id, async () =>
+                await _repository.GetAsync(id));
             Variant = id;
         }
     }
