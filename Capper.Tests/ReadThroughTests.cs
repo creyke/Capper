@@ -26,8 +26,8 @@ namespace Capper.Tests
         [InlineData(2)]
         public async Task CanRead(int key)
         {
-            var response = await cache.ReadThroughAsync(key, () =>
-                Task.FromResult((IEnumerable<string>)(new[] { key.ToString() })));
+            var response = await cache.ReadThroughAsync(key,
+                () => Task.FromResult((IEnumerable<string>)(new[] { key.ToString() })));
 
             Assert.Equal(key.ToString(), response.First());
         }
@@ -36,14 +36,14 @@ namespace Capper.Tests
         [InlineData(0)]
         public async Task CanHitCacheOnSecondAttempt(int key)
         {
-            var first = await cache.ReadThroughWithResponseAsync(key, () =>
-                Task.FromResult(key.ToString()));
+            var first = await cache.ReadThroughWithResponseAsync(key,
+                () => Task.FromResult(key.ToString()));
 
             Assert.Equal(CacheResponseType.Miss, first.ResponseType);
             Assert.Equal(key.ToString(), first.Value);
 
-            var second = await cache.ReadThroughWithResponseAsync(key, () =>
-                Task.FromResult(key.ToString()));
+            var second = await cache.ReadThroughWithResponseAsync(key,
+                () => Task.FromResult(key.ToString()));
 
             Assert.Equal(CacheResponseType.Hit, second.ResponseType);
             Assert.Equal(key.ToString(), second.Value);
@@ -53,11 +53,11 @@ namespace Capper.Tests
         [InlineData(0)]
         public async Task DoesntPersistOnException(int key)
         {
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => cache.ReadThroughWithResponseAsync(key, () =>
-                Task.FromResult(key.ToString()[int.MaxValue..])));
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => cache.ReadThroughWithResponseAsync(key,
+                () => Task.FromResult(key.ToString()[int.MaxValue..])));
 
-            var second = await cache.ReadThroughWithResponseAsync(key, () =>
-                Task.FromResult(key.ToString()));
+            var second = await cache.ReadThroughWithResponseAsync(key,
+                () => Task.FromResult(key.ToString()));
 
             Assert.Equal(CacheResponseType.Miss, second.ResponseType);
             Assert.Equal(key.ToString(), second.Value);
@@ -71,9 +71,8 @@ namespace Capper.Tests
         {
             var connection = new SqlConnection();
 
-            var response = await cache.ReadThroughAsync(key, async () => 
-                await connection.QueryAsync<Car>($"SELECT * FROM Cars WHERE NumDoors = {key}"));
-
+            var response = await cache.ReadThroughAsync(key,
+                async () => await connection.QueryAsync<Car>($"SELECT * FROM Cars WHERE NumDoors = {key}"));
         }
 
         class Car
