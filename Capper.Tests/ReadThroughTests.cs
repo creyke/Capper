@@ -40,9 +40,12 @@ namespace Capper.Tests
             var connection = new SqlConnection();
 
             var response = await cache.ReadThroughAsync(key, async () => 
-                await connection.QueryAsync<string>("SELECT * FROM c"));
+                await connection.QueryAsync<Car>($"SELECT * FROM Cars WHERE NumDoors = {key}"));
 
-            Assert.Equal(key.ToString(), response.First());
+        }
+
+        class Car
+        {
         }
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Capper
 {
-    public class CacheResponse<TValue>
+    public class CacheResponse<T>
     {
-        public TValue Value { get; }
+        public T Value { get; }
         public CacheResponseType ResponseType { get; }
         public TimeSpan ResponseTime { get; }
 
-        public CacheResponse(TValue value, CacheResponseType responseType, TimeSpan responseTime)
+        public CacheResponse(T value, CacheResponseType responseType, TimeSpan responseTime)
         {
             Value = value;
             ResponseType = responseType;
