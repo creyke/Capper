@@ -11,17 +11,17 @@ namespace Capper.Samples.AspNet.Pages
     public class AnimalModel : PageModel
     {
         private readonly ILogger<AnimalModel> _logger;
-        private readonly IDistributedCache _cache;
         private readonly AnimalRepository _repository;
-
+        private readonly IDistributedCache _cache;
+        
         public CacheResponse<IEnumerable<Animal>> CacheResponse { get; private set; }
         public string Variant { get; private set; }
 
-        public AnimalModel(ILogger<AnimalModel> logger, IDistributedCache cache, AnimalRepository repository)
+        public AnimalModel(ILogger<AnimalModel> logger, AnimalRepository repository, IDistributedCache cache)
         {
             _logger = logger;
-            _cache = cache;
             _repository = repository;
+            _cache = cache;
         }
 
         public async Task OnGet(string id)

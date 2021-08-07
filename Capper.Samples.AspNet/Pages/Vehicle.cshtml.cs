@@ -11,15 +11,16 @@ namespace Capper.Samples.AspNet.Pages
     public class VehicleModel : PageModel
     {
         private readonly ILogger<VehicleModel> _logger;
-        private readonly IDistributedCache _cache;
         private readonly VehicleRepository _repository;
-
+        private readonly IDistributedCache _cache;
+        
         public CacheResponse<IEnumerable<Vehicle>> CacheResponse { get; private set; }
         public string Variant { get; private set; }
 
-        public VehicleModel(ILogger<VehicleModel> logger, IDistributedCache cache, VehicleRepository repository)
+        public VehicleModel(ILogger<VehicleModel> logger, VehicleRepository repository, IDistributedCache cache)
         {
             _logger = logger;
+            _repository = repository;
             _cache = cache;
         }
 
