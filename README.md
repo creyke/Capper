@@ -9,7 +9,7 @@ Capper provides extension methods for [IDistributedCache](https://docs.microsoft
 
 It is partly inspired by the way [Dapper](https://github.com/DapperLib/Dapper) provides light, unopinionated strongly typed ORM extensions to **SqlConnection** (i.e. Capper is Dapper for caching).
 
-Because it utilises **IDistributedCache**, Capper supports either in-memory (default) or [durable caches](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed).
+Because it utilises **IDistributedCache**, Capper supports either in-memory (default) or [durable caches](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed#establish-distributed-caching-services).
 
 # Status
 The library is currently in development.
