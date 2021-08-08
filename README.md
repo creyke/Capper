@@ -30,7 +30,7 @@ public AnimalController(AnimalRepository repository, IDistributedCache cache)
 }
 
 [HttpGet("{id}")]
-public async Task<Animal> GetWithoutCache(string id)
+public async Task<Animal> Get(string id)
 {
     return await repository.GetAsync(id);
 }
@@ -48,7 +48,7 @@ public AnimalCacheController(AnimalRepository repository, IDistributedCache cach
 }
 
 [HttpGet("{id}")]
-public async Task<Animal> GetWithoutCache(string id)
+public async Task<Animal> Get(string id)
 {
     return await cache.ReadThroughAsync(id,
         async () => await repository.GetAsync(id));
