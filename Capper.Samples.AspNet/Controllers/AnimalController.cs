@@ -12,13 +12,13 @@ namespace Capper.Samples.AspNet.Controllers
     {
         private readonly AnimalRepository repository;
 
-        public AnimalController(AnimalRepository repository, IDistributedCache cache)
+        public AnimalController(AnimalRepository repository)
         {
             this.repository = repository;
         }
 
         [HttpGet("{id}")]
-        public async Task<Animal> GetWithoutCache(string id)
+        public async Task<Animal> Get(string id)
         {
             return await repository.GetAsync(id);
         }
@@ -38,7 +38,7 @@ namespace Capper.Samples.AspNet.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Animal> GetWithoutCache(string id)
+        public async Task<Animal> Get(string id)
         {
             return await cache.ReadThroughAsync(id,
                 async () => await repository.GetAsync(id));
