@@ -54,3 +54,17 @@ public async Task<Animal> GetWithoutCache(string id)
         async () => await repository.GetAsync(id));
 }
 ```
+
+## Adding durability (Redis in this case)
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = "127.0.0.1:6379";
+        options.InstanceName = "Animals";
+    });
+
+    services.AddRazorPages();
+}
+```
