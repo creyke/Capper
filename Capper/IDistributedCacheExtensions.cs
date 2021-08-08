@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
+﻿using Capper;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Capper
+namespace Microsoft.Extensions.Caching.Distributed
 {
     public static class IDistributedCacheExtensions
     {
