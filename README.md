@@ -24,7 +24,7 @@ Install the [NuGet package](https://www.nuget.org/packages/Capper) with a packag
 ```csharp
 private readonly AnimalRepository repository;
 
-public AnimalController(AnimalRepository repository, IDistributedCache cache)
+public AnimalController(AnimalRepository repository)
 {
     this.repository = repository;
 }
