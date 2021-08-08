@@ -5,9 +5,11 @@ Simple and powerful strongly typed read-through caching extensions for .NET's ID
 [![NuGet](https://img.shields.io/nuget/v/Capper.svg?style=flat)](https://www.nuget.org/packages/Capper)
 
 # Overview
-Capper provides extension methods for [IDistributedCache](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed) which encapsulate the business logic (and drastically simplify the implementation) of read-through caching. It is partly inspired by the way [Dapper](https://github.com/DapperLib/Dapper) provides light, unopinionated strongly typed ORM extensions to **SqlConnection** (i.e. Capper is Dapper for caching).
+Capper provides extension methods for [IDistributedCache](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed) which encapsulate the business logic (and drastically simplify the implementation) of read-through caching.
 
-Because it utilises **IDistributedCache**, Capper supports either in-memory (default) or [durable caches](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed).
+It is partly inspired by the way [Dapper](https://github.com/DapperLib/Dapper) provides light, unopinionated strongly typed ORM extensions to **SqlConnection** (i.e. Capper is Dapper for caching).
+
+Because it utilises **IDistributedCache**, Capper supports either in-memory (default) or [durable caches](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed#establish-distributed-caching-services).
 
 # Status
 The library is currently in development.
