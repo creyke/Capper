@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.Caching.Distributed
@@ -14,7 +15,12 @@ namespace Microsoft.Extensions.Caching.Distributed
             return (await ReadThroughWithResponseAsync(cache, key, func)).Value;
         }
 
-        public static async Task<CacheResponse<TKey, T>> ReadThroughWithResponseAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func)
+        public static async Task<CacheResponse<TKey, T>> ReadThroughWithResponseAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func, CancellationToken token = default(CancellationToken))
+        {
+            return await ReadThroughWithResponseAsync(cache, key, func, new DistributedCacheEntryOptions(), token);
+        }
+
+        public static async Task<CacheResponse<TKey, T>> ReadThroughWithResponseAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
         {
             var responseType = CacheResponseType.Hit;
 
@@ -29,7 +35,7 @@ namespace Microsoft.Extensions.Caching.Distributed
             if (entry is null)
             {
                 value = await func.Invoke();
-                await cache.SetAsync(keyString, Serialize(value));
+                await cache.SetAsync(keyString, Serialize(value), options, token);
                 responseType = CacheResponseType.Miss;
             }
             else
