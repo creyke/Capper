@@ -24,13 +24,13 @@ Install the [NuGet package](https://www.nuget.org/packages/Capper) with a packag
 ```csharp
 private readonly AnimalRepository repository;
 
-public AnimalController(AnimalRepository repository, IDistributedCache cache)
+public AnimalController(AnimalRepository repository)
 {
     this.repository = repository;
 }
 
 [HttpGet("{id}")]
-public async Task<Animal> GetWithoutCache(string id)
+public async Task<Animal> Get(string id)
 {
     return await repository.GetAsync(id);
 }
@@ -48,9 +48,23 @@ public AnimalCacheController(AnimalRepository repository, IDistributedCache cach
 }
 
 [HttpGet("{id}")]
-public async Task<Animal> GetWithoutCache(string id)
+public async Task<Animal> Get(string id)
 {
     return await cache.ReadThroughAsync(id,
         async () => await repository.GetAsync(id));
+}
+```
+
+## Adding durability (Redis in this case)
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = "127.0.0.1:6379";
+        options.InstanceName = "Animals";
+    });
+
+    services.AddRazorPages();
 }
 ```
