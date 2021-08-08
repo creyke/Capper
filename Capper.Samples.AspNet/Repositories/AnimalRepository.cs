@@ -15,13 +15,24 @@ namespace Capper.Samples.AspNet.Repositories
             random = new Random();
         }
 
-        public async Task<IEnumerable<Animal>> GetAsync(string key)
+        public async Task<Animal> GetAsync(string key)
+        {
+            await Task.Delay(random.Next(100, 300));
+
+            return new Animal
+            {
+                Id = key,
+                Variant = key
+            };
+        }
+
+        public async Task<IEnumerable<Animal>> ListAsync(string key)
         {
             await Task.Delay(random.Next(100, 300));
 
             return Enumerable.Range(0, random.Next(5, 10)).Select(x => new Animal
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Variant = key
             });
         }

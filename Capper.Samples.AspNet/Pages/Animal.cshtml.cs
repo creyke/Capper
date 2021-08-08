@@ -26,7 +26,7 @@ namespace Capper.Samples.AspNet.Pages
         public async Task OnGet(string id)
         {
             CacheResponse = await _cache.ReadThroughWithResponseAsync(id,
-                async () => await _repository.GetAsync(id));
+                async () => await _repository.ListAsync(id));
         }
     }
 }
