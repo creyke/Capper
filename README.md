@@ -12,9 +12,7 @@ It is partly inspired by the way [Dapper](https://github.com/DapperLib/Dapper) p
 Because it utilises **IDistributedCache**, Capper supports either in-memory (default) or [durable caches](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed#establish-distributed-caching-services).
 
 # Status
-The library is currently in development.
-
-The [NuGet package](https://www.nuget.org/packages/Capper) is available as a preview.
+The library is in general availability and is available as a [NuGet package](https://www.nuget.org/packages/Capper).
 
 # Usage
 Adding read through caching to your .NET application has never been easier.
