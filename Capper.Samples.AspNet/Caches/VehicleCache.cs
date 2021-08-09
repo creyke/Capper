@@ -4,9 +4,7 @@ using Microsoft.Extensions.Options;
 
 namespace Capper.Samples.AspNet.Caches
 {
-    public interface IVehicleCache : IDistributedCache
-    {
-    }
+    public interface IVehicleCache : IDistributedCache {}
 
     public class VehicleCache : MemoryDistributedCache, IVehicleCache
     {

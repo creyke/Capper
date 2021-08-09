@@ -4,9 +4,7 @@ using Microsoft.Extensions.Options;
 
 namespace Capper.Samples.AspNet.Caches
 {
-    public interface IAnimalCache : IDistributedCache
-    {
-    }
+    public interface IAnimalCache : IDistributedCache {}
 
     public class AnimalCache : MemoryDistributedCache, IAnimalCache
     {
