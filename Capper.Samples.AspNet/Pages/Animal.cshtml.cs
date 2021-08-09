@@ -1,4 +1,5 @@
-﻿using Capper.Samples.AspNet.Model;
+﻿using Capper.Samples.AspNet.Caches;
+using Capper.Samples.AspNet.Model;
 using Capper.Samples.AspNet.Repositories;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Distributed;
@@ -16,7 +17,7 @@ namespace Capper.Samples.AspNet.Pages
         
         public CacheResponse<string, IEnumerable<Animal>> CacheResponse { get; private set; }
 
-        public AnimalModel(ILogger<AnimalModel> logger, AnimalRepository repository, IDistributedCache cache)
+        public AnimalModel(ILogger<AnimalModel> logger, AnimalRepository repository, IAnimalCache cache)
         {
             _logger = logger;
             _repository = repository;

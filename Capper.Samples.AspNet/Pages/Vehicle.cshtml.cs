@@ -1,4 +1,5 @@
-﻿using Capper.Samples.AspNet.Model;
+﻿using Capper.Samples.AspNet.Caches;
+using Capper.Samples.AspNet.Model;
 using Capper.Samples.AspNet.Repositories;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Distributed;
@@ -16,7 +17,7 @@ namespace Capper.Samples.AspNet.Pages
         
         public CacheResponse<string, IEnumerable<Vehicle>> CacheResponse { get; private set; }
 
-        public VehicleModel(ILogger<VehicleModel> logger, VehicleRepository repository, IDistributedCache cache)
+        public VehicleModel(ILogger<VehicleModel> logger, VehicleRepository repository, IVehicleCache cache)
         {
             _logger = logger;
             _repository = repository;

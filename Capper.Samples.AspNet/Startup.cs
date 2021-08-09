@@ -1,3 +1,4 @@
+using Capper.Samples.AspNet.Caches;
 using Capper.Samples.AspNet.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,9 @@ namespace Capper.Samples.AspNet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IAnimalCache, AnimalCache>();
+            services.AddSingleton<IVehicleCache, VehicleCache>();
+
             services.AddRazorPages();
 
             services.AddSingleton<AnimalRepository>();
