@@ -13,8 +13,5 @@ type HomeController (logger : ILogger<HomeController>) =
     member this.Index () =
         this.View()
 
-    member this.Privacy () =
-        this.View()
-
     member this.Error () =
         this.View();
