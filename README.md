@@ -97,9 +97,9 @@ public async Task<Animal> Get(string id)
 [HttpGet("{id}")]
 public async Task<Animal> Get(string id)
 {
-    return await cache.ReadThroughAsync(animalId, async () => { return
-        await connection.QuerySingleAsync<Animal>($"SELECT TOP 1 FROM Animals WHERE Id = @AnimalId", new { AnimalId = animalId });
-    });
+    return await cache.ReadThroughAsync(animalId, async () =>
+        await connection.QuerySingleAsync<Animal>($"SELECT TOP 1 FROM Animals WHERE Id = @AnimalId", new { AnimalId = animalId })
+    );
 }
 ```
 
