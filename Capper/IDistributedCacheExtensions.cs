@@ -13,17 +13,17 @@ namespace Microsoft.Extensions.Caching.Distributed
 
         public static async Task<T> ReadThroughAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func, ICacheSerializer serializer = null, CancellationToken token = default(CancellationToken))
         {
-            return (await ReadThroughWithResponseAsync(cache, key, func, serializer, token)).Value;
+            return (await ReadThroughWithResponseAsync(cache, key, func, serializer, token).ConfigureAwait(false)).Value;
         }
 
         public static async Task<T> ReadThroughAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func, DistributedCacheEntryOptions options, ICacheSerializer serializer = null, CancellationToken token = default(CancellationToken))
         {
-            return (await ReadThroughWithResponseAsync(cache, key, func, options, serializer, token)).Value;
+            return (await ReadThroughWithResponseAsync(cache, key, func, options, serializer, token).ConfigureAwait(false)).Value;
         }
 
         public static async Task<CacheResponse<TKey, T>> ReadThroughWithResponseAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func, ICacheSerializer serializer = null, CancellationToken token = default(CancellationToken))
         {
-            return await ReadThroughWithResponseAsync(cache, key, func, new DistributedCacheEntryOptions(), serializer, token);
+            return await ReadThroughWithResponseAsync(cache, key, func, new DistributedCacheEntryOptions(), serializer, token).ConfigureAwait(false);
         }
 
         public static async Task<CacheResponse<TKey, T>> ReadThroughWithResponseAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func, DistributedCacheEntryOptions options, ICacheSerializer serializer = null, CancellationToken token = default(CancellationToken))
@@ -42,8 +42,8 @@ namespace Microsoft.Extensions.Caching.Distributed
 
             if (entry is null)
             {
-                value = await func.Invoke();
-                await cache.SetAsync(keyString, serializer.Serialize(value), options, token);
+                value = await func.Invoke().ConfigureAwait(false);
+                await cache.SetAsync(keyString, serializer.Serialize(value), options, token).ConfigureAwait(false);
                 responseType = CacheResponseType.Miss;
             }
             else
