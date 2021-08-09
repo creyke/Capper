@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Capper.Serialization;
+using Dapper;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -63,6 +64,27 @@ namespace Capper.Tests
             Assert.Equal(key.ToString(), second.Value);
         }
 
+        [Theory]
+        [InlineData(0)]
+        public async Task CanUseCustomSerializer(int key)
+        {
+            var serializer = new PaddedJsonCacheSerializer();
+
+            var first = await cache.ReadThroughWithResponseAsync(key,
+                () => Task.FromResult(key.ToString()),
+                serializer);
+
+            Assert.Equal(CacheResponseType.Miss, first.ResponseType);
+            Assert.Equal(key.ToString(), first.Value);
+
+            var second = await cache.ReadThroughWithResponseAsync(key,
+                () => Task.FromResult(key.ToString()),
+                serializer);
+
+            Assert.Equal(CacheResponseType.Hit, second.ResponseType);
+            Assert.Equal(key.ToString(), second.Value);
+        }
+
         [Theory(Skip = "Example integration test.")]
         [InlineData(0)]
         [InlineData(1)]
@@ -77,6 +99,28 @@ namespace Capper.Tests
 
         class Car
         {
+        }
+
+        class PaddedJsonCacheSerializer : ICacheSerializer
+        {
+            private readonly ICacheSerializer jsonCacheSerializer;
+
+            public PaddedJsonCacheSerializer()
+            {
+                jsonCacheSerializer = new JsonCacheSerializer();
+            }
+
+            public T Deserialize<T>(byte[] serialized)
+            {
+                return jsonCacheSerializer.Deserialize<T>(serialized[0..^1]);
+            }
+
+            public byte[] Serialize<T>(T deserialized)
+            {
+                var array = jsonCacheSerializer.Serialize<T>(deserialized);
+                Array.Resize(ref array, array.Length + 1);
+                return array;
+            }
         }
     }
 }
