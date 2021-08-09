@@ -70,3 +70,26 @@ public void ConfigureServices(IServiceCollection services)
     services.AddRazorPages();
 }
 ```
+
+## Customising cache entry serialization / deserialziation
+```csharp
+public class JsonCacheSerializer : ICacheSerializer
+{
+    public T Deserialize<T>(byte[] serialized)
+    {
+        return JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(serialized));
+    }
+
+    public byte[] Serialize<T>(T deserialized)
+    {
+        return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(deserialized));
+    }
+}
+
+public async Task<Animal> Get(string id)
+{
+    return await cache.ReadThroughAsync(id,
+        async () => await repository.GetAsync(id),
+        new JsonCacheSerializer());
+}
+```
