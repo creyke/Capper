@@ -104,3 +104,28 @@ public async Task<Animal> Get(string id)
     });
 }
 ```
+
+## Using multiple caches in the same application
+```csharp
+public interface IAnimalCache : IDistributedCache {}
+public class AnimalCache : MemoryDistributedCache, IAnimalCache
+{
+    public AnimalCache(IOptions<MemoryDistributedCacheOptions> optionsAccessor) : base(optionsAccessor)
+    {
+    }
+}
+
+public interface IVehicleCache : IDistributedCache {}
+public class VehicleCache : MemoryDistributedCache, IVehicleCache
+{
+    public VehicleCache(IOptions<MemoryDistributedCacheOptions> optionsAccessor) : base(optionsAccessor)
+    {
+    }
+}
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSingleton<IAnimalCache, AnimalCache>();
+    services.AddSingleton<IVehicleCache, VehicleCache>();
+}
+```
