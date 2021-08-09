@@ -116,9 +116,9 @@ public class AnimalCache : MemoryDistributedCache, IAnimalCache
 }
 
 public interface IVehicleCache : IDistributedCache {}
-public class VehicleCache : MemoryDistributedCache, IVehicleCache
+public class VehicleCache : RedisCache, IVehicleCache
 {
-    public VehicleCache(IOptions<MemoryDistributedCacheOptions> optionsAccessor) : base(optionsAccessor)
+    public VehicleCache(IOptions<RedisCacheOptions> optionsAccessor) : base(optionsAccessor)
     {
     }
 }
