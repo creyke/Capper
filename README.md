@@ -22,7 +22,7 @@ Adding read through caching to your .NET application has never been easier.
 ## Installing
 Install the [NuGet package](https://www.nuget.org/packages/Capper) with a package manager.
 
-## Before Capper
+## Before Capper (without caching)
 ```csharp
 private readonly AnimalRepository repository;
 
@@ -91,5 +91,16 @@ public async Task<Animal> Get(string id)
     return await cache.ReadThroughAsync(id,
         async () => await repository.GetAsync(id),
         new JsonCacheSerializer());
+}
+```
+
+## Using Capper with Dapper
+```csharp
+[HttpGet("{id}")]
+public async Task<Animal> Get(string id)
+{
+    return await cache.ReadThroughAsync(animalId, async () => { return
+        await connection.QuerySingleAsync<Animal>($"SELECT TOP 1 FROM Animals WHERE Id = @AnimalId", new { AnimalId = animalId });
+    });
 }
 ```
