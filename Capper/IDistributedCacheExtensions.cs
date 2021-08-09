@@ -10,9 +10,14 @@ namespace Microsoft.Extensions.Caching.Distributed
 {
     public static class IDistributedCacheExtensions
     {
-        public static async Task<T> ReadThroughAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func)
+        public static async Task<T> ReadThroughAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func, CancellationToken token = default(CancellationToken))
         {
-            return (await ReadThroughWithResponseAsync(cache, key, func)).Value;
+            return (await ReadThroughWithResponseAsync(cache, key, func, token)).Value;
+        }
+
+        public static async Task<T> ReadThroughAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
+        {
+            return (await ReadThroughWithResponseAsync(cache, key, func, options, token)).Value;
         }
 
         public static async Task<CacheResponse<TKey, T>> ReadThroughWithResponseAsync<TKey, T>(this IDistributedCache cache, TKey key, Func<Task<T>> func, CancellationToken token = default(CancellationToken))
