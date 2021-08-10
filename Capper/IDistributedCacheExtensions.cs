@@ -53,7 +53,7 @@ namespace Microsoft.Extensions.Caching.Distributed
 
             stopwatch.Stop();
 
-            return new CacheResponse<TKey, T>(key,value, responseType, TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds));
+            return new CacheResponse<TKey, T>(key,value, responseType, stopwatch.Elapsed);
         }
     }
 }
